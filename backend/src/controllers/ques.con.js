@@ -10,6 +10,7 @@ export const addQuestionToSession = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid data" });
     }
     const session = await Sessions.findById(sessionId);
+
     if (!session) {
       return res
         .status(400)
@@ -28,7 +29,13 @@ export const addQuestionToSession = async (req, res) => {
     session.questions.push(...createdNewQuestions.map((q) => q._id));
     await session.save();
 
-    return res.status(200).json({ success: true, createdNewQuestions });
+    return res
+      .status(200)
+      .json({
+        success: true,
+        createdNewQuestions,
+        message: "New questions generated",
+      });
   } catch (error) {
     return res
       .status(500)

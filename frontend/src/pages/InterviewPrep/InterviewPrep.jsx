@@ -1,56 +1,45 @@
-import { useFetcher, useLoaderData, useRevalidator } from "react-router-dom";
+import { useLoaderData, useRevalidator } from "react-router-dom";
 import DashBoardLayout from "../../Layouts/DashBoardLayout";
 import RoleInfoReader from "./components/RoleInfoReader";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import QuestionCards from "../../components/Cards/QuestionCards";
 import { motion, AnimatePresence } from "framer-motion";
 import Drawer from "../../components/Drawer";
-import { LuCircleAlert } from "react-icons/lu";
+import { LuCircleAlert, LuListCollapse } from "react-icons/lu";
 import AiResponsePreview from "../../components/AiResponse/AiResponsePreview";
 import SkeletonLoader from "../../components/Loaders/SkeletonLoader";
+import SpinLoader from "../../components/Loaders/SpinLoader";
+import {
+  useExplainQuestion,
+  useGenerateMoreQuestions,
+  usePinQuestion,
+} from "../../hooks/useCustomHooks";
 const InterviewPrep = () => {
   const data = useLoaderData();
-  const pinFetcher = useFetcher();
-  const explainFetcher = useFetcher();
   const sessionData = data.session;
-  const [openLearnMoreDrawer, setOpenLearnMoreDrawer] = useState(false);
-  const [isPinned, setIsPinned] = useState(false);
   const revalidator = useRevalidator();
-  const toggleQuestionPinStatus = (questionId) => {
-    pinFetcher.submit(
-      { action: "pin", questionId },
-      { method: "post", action: `/interview-prep/${sessionData._id}` }
-    );
-  };
-  useEffect(() => {
-    if (pinFetcher.state === "idle" && pinFetcher.data) {
-      revalidator.revalidate();
-    }
-    if (explainFetcher.state === "idle" && explainFetcher.data) {
-      revalidator.revalidate();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    pinFetcher.state,
-    pinFetcher.data,
-    explainFetcher.state,
-    explainFetcher.data,
-  ]);
+  const [openLearnMoreDrawer, setOpenLearnMoreDrawer] = useState(false);
 
-  const generateConceptExplanation = (question) => {
-    setOpenLearnMoreDrawer(true);
-    explainFetcher.submit(
-      { action: "explain", question },
-      { method: "post", action: `/interview-prep/${sessionData._id}` }
-    );
+  const dataToGenerate = {
+    role: sessionData?.role,
+    experience: sessionData?.experience,
+    topicsToFocus: sessionData?.topicsToFocus,
+    numberOfQuestions: 5,
+    level: sessionData?.level,
   };
-  const isLoading = explainFetcher?.state === "submitting";
-  console.log(isLoading);
-  const explanation = explainFetcher?.data?.explanation;
-  const error = explainFetcher?.error;
-  const onLearnMore = (questionId) => {};
+
+  const { togglePin } = usePinQuestion(sessionData?._id, revalidator);
+
+  const { isLoading, explanation, error, generateConceptExplanation } =
+    useExplainQuestion(sessionData?._id, revalidator, setOpenLearnMoreDrawer);
+
+  const {
+    isLoading: isLoadingMore,
+    uploadMoreQuestion,
+    loadMoreError,
+  } = useGenerateMoreQuestions(sessionData?._id, dataToGenerate, revalidator);
 
   return (
     <DashBoardLayout>
@@ -102,9 +91,32 @@ const InterviewPrep = () => {
                           generateConceptExplanation(data?.question)
                         }
                         isPinned={data?.isPinned}
-                        onTogglePin={() => toggleQuestionPinStatus(data._id)}
+                        onTogglePin={() => togglePin(data._id)}
                       />
                     </>
+
+                    {sessionData?.questions?.length == index + 1 && (
+                      <div className="flex items-center justify-center mt-5">
+                        {loadMoreError ? (
+                          <p className="text-red-500 text-sm font-medium">
+                            {loadMoreError}
+                          </p>
+                        ) : (
+                          <button
+                            className="flex items-center gap-3 text-white bg-black font-medium text-nowrap px-5 py-2 mr-2 rounded hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+                            onClick={uploadMoreQuestion}
+                            disabled={isLoadingMore}
+                          >
+                            {isLoadingMore ? (
+                              <SpinLoader />
+                            ) : (
+                              <LuListCollapse className="text-lg" />
+                            )}
+                            {isLoadingMore ? "Loading...." : "Load more"}
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}

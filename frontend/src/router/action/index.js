@@ -52,43 +52,57 @@ export const SessionAction = async ({ request }) => {
   const formData = await request.formData();
   const actionType = formData.get("actionType");
   console.log(formData);
-  if (actionType === "delete") {
-    const sessionId = formData.get("sessionId");
-    try {
-      const response = await authApi.post(API_PATHS.SESSION.DELETE, sessionId);
+  // if (actionType === "delete") {
+  //   const sessionId = formData.get("sessionId");
+  //   try {
+  //     const response = await authApi.post(API_PATHS.SESSION.DELETE, sessionId);
 
-      if (response.status !== 200) {
-        return { error: "Failed to delete session" };
-      }
-      return response.data;
-    } catch (error) {
-      return {
-        error: error?.response?.data?.message || "Something went wrong",
-      };
-    }
-  }
-  const payload = Object.fromEntries(formData.entries());
+  //     if (response.status !== 200) {
+  //       return { error: "Failed to delete session" };
+  //     }
+  //     return response.data;
+  //   } catch (error) {
+  //     return {
+  //       error: error?.response?.data?.message || "Something went wrong",
+  //     };
+  //   }
+  // }
 
   if (actionType === "createAction") {
+    const payload = Object.fromEntries(formData.entries());
+    const sessionId = payload.sessionId;
+    console.log(payload);
     try {
       const aiResponse = await authApi.post(API_PATHS.AI.GENERATE_QUESTIONS, {
         ...payload,
-        numberOfQuestions: 10,
-        level: "basic",
       });
 
       if (aiResponse.status !== 200) {
         return { error: "Failed to generate questions" };
       }
       const generatedQuestion = aiResponse.data.generatedQuestion;
-      const response = await authApi.post(API_PATHS.SESSION.CREATE, {
-        ...payload,
-        questions: generatedQuestion,
-      });
-      if (response.status !== 200) {
-        return { error: "Failed to create sesion" };
+      if (sessionId) {
+        const updateResponse = await authApi.post(
+          API_PATHS.QUESTION.ADD_TO_SESSION,
+          {
+            sessionId,
+            newquestions: generatedQuestion,
+          }
+        );
+        if (updateResponse.status !== 200) {
+          return { error: updateResponse.data?.error };
+        }
+        return updateResponse.data;
+      } else {
+        const response = await authApi.post(API_PATHS.SESSION.CREATE, {
+          ...payload,
+          questions: generatedQuestion,
+        });
+        if (response.status !== 200) {
+          return { error: "Failed to create sesion" };
+        }
+        return response.data;
       }
-      return response.data;
     } catch (error) {
       return {
         error: error?.response?.data?.message || "Something went wrong",

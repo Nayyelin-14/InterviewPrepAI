@@ -9,7 +9,7 @@ export const generateInterviewQuestions = async (req, res) => {
   try {
     const { role, experience, topicsToFocus, numberOfQuestions, level } =
       req.body;
-    console.log(role, experience, topicsToFocus, numberOfQuestions, level);
+
     if (
       !role ||
       !experience ||
@@ -38,6 +38,7 @@ export const generateInterviewQuestions = async (req, res) => {
         message: "There is no content",
       });
     }
+    console.log(response);
     const rawText = response.candidates[0].content.parts[0].text;
     const cleanText = rawText
       .replace(/^```json\s*/, "")
@@ -45,12 +46,14 @@ export const generateInterviewQuestions = async (req, res) => {
       .trim();
 
     const data = JSON.parse(cleanText);
+
     return res.status(200).json({
       success: true,
       message: "Successfully generated",
       generatedQuestion: data,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Failed to generate quetions",
       error: error.message,
@@ -60,7 +63,7 @@ export const generateInterviewQuestions = async (req, res) => {
 export const generateExplanation = async (req, res) => {
   try {
     const { question } = req.body;
-    console.log(question);
+
     if (!question) {
       return res.status(400).json({
         success: false,
@@ -86,14 +89,13 @@ export const generateExplanation = async (req, res) => {
       .trim();
 
     const data = JSON.parse(cleanText);
-    console.log("data", data);
+
     return res.status(200).json({
       success: true,
       message: "Successfully generated",
       explanation: data,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "Server error",
       error: error.message,
