@@ -88,21 +88,17 @@ export const deleteSession = async (req, res) => {
       });
     }
     //delete questions linked to the session
-    const questionDeleteResult = await Questions.deleteMany({
+    await Questions.deleteMany({
       session: session._id,
     });
-    if (questionDeleteResult.deletedCount === 0) {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to delete linked questions or no questions found",
-      });
-    }
 
     //then delete the session
     await session.deleteOne();
-    return res.status(200).json({ success: true, message: "Session deleted" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Selected session deleted" });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error" });
+    return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 export const getSessionById = async (req, res) => {

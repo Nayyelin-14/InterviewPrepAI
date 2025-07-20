@@ -51,22 +51,26 @@ export const RegisterAction = async ({ request }) => {
 export const SessionAction = async ({ request }) => {
   const formData = await request.formData();
   const actionType = formData.get("actionType");
-  console.log(formData);
-  // if (actionType === "delete") {
-  //   const sessionId = formData.get("sessionId");
-  //   try {
-  //     const response = await authApi.post(API_PATHS.SESSION.DELETE, sessionId);
 
-  //     if (response.status !== 200) {
-  //       return { error: "Failed to delete session" };
-  //     }
-  //     return response.data;
-  //   } catch (error) {
-  //     return {
-  //       error: error?.response?.data?.message || "Something went wrong",
-  //     };
-  //   }
-  // }
+  if (actionType === "deleteAction") {
+    const sessionId = formData.get("sessionId");
+    try {
+      const response = await authApi.delete(
+        API_PATHS.SESSION.DELETE(sessionId)
+      );
+
+      // Check response.data.success instead of status
+      if (!response.data.success) {
+        return { error: response.data.message || "Failed to delete session" };
+      }
+
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      return {
+        error: error?.message,
+      };
+    }
+  }
 
   if (actionType === "createAction") {
     const payload = Object.fromEntries(formData.entries());

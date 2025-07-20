@@ -5,7 +5,7 @@ const RoleInfoReader = ({
   topicsToFocus,
   level,
   experience,
-  description,
+
   questions,
   updatedAt,
 }) => {

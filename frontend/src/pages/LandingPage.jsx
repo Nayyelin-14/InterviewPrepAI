@@ -13,8 +13,8 @@ const LandingPage = () => {
   const [currentPage, setCurrentPage] = useState("login");
   const navigate = useNavigate();
   const HandleCTA = () => {
-    if (user) {
-      setOpenAuthModal(false);
+    if (!user) {
+      setOpenAuthModal(true);
     } else {
       navigate("/dashboard");
     }
@@ -25,7 +25,7 @@ const LandingPage = () => {
         <div className="w-[500px] h-[500px] backdrop-blur-[65px] absolute top-0 left-0" />
         <div className="container mx-auto px-6 md:px-10 pt-6 pb-[200px] relative z-10">
           {/* Header */}
-          <header className="flex justify-between items-center my-10">
+          <header className="flex justify-between items-center mb-7 ">
             <div className="text-xl text-black font-bold">
               Interview Prep By AI
             </div>
@@ -42,30 +42,33 @@ const LandingPage = () => {
           </header>
 
           {/* Hero Content */}
-          <div className="flex md:flex-row flex-col  items-center">
-            <div className="w-full md:w-1/2 pr-4 mb-8 md:mb-0">
-              <div className="flex items-center justify-left mb-2">
+          <div className="flex flex-col lg:flex-row items-center gap-6 w-[90%] mx-auto">
+            {/* Left Content */}
+            <div className="w-full lg:w-1/2">
+              <div className="flex items-center justify-start mb-4">
                 <div className="flex items-center gap-2 text-[13px] text-amber-600 font-semibold bg-amber-100 px-3 py-1 rounded-3xl border border-amber-300">
                   AI Powered
                 </div>
               </div>
-              <h1 className="text-5xl text-black font-medium mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl text-black font-medium mb-6 leading-tight">
                 Ace Interviews with <br />
                 <span className="text-transparent bg-clip-text bg-[radial-gradient(circle,_#FF9324_0%,_#FCD760_100%)] bg-[length:200%_200%] animate-text-shine font-semibold">
-                  Ai-Powered
+                  AI-Powered
                 </span>{" "}
                 Learning
               </h1>
             </div>
-            <div className="w-full md:w-1/2">
-              <p className="text-xl font-semibold text-black">
+
+            {/* Right Content */}
+            <div className="w-full lg:w-1/2">
+              <p className="text-lg md:text-xl font-semibold text-black">
                 Get role-specific questions, expand answers when you need them,
                 dive deeper into concepts, and organize everything your way.
                 From preparation to mastery – your ultimate interview toolkit is
                 here.
               </p>
               <button
-                className="p-3 bg-black text-white text-md rounded-full px-9 mt-5 font-medium cursor-pointer hover:bg-black/80"
+                className="p-3 bg-black text-white text-md rounded-full px-9 mt-5 font-medium hover:bg-black/80"
                 onClick={HandleCTA}
               >
                 Get Started
