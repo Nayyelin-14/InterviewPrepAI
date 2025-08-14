@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const Register = ({ setCurrentPage }) => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [profilePic, setProfilePic] = useState(null);
+
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,7 +43,7 @@ const Register = ({ setCurrentPage }) => {
         action="/auth/register"
         encType="multipart/form-data"
       >
-        <ProfileImageSelector image={profilePic} setImage={setProfilePic} />
+        <ProfileImageSelector />
         <div className="grid gird-cols-1 md:grid-cols-1 gap-2">
           <Input
             name="fullName"
