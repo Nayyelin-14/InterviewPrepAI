@@ -15,10 +15,7 @@ const Register = ({ setCurrentPage }) => {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const { updateUser } = useContext(UserContext);
-  const goToLogin = () => {
-    navigate("/auth/login");
-    setCurrentPage("login");
-  };
+
   const userData = fetcher?.data?.user;
   const isSubmitting = fetcher.state === "submitting";
 
@@ -89,9 +86,12 @@ const Register = ({ setCurrentPage }) => {
           <button
             type="button"
             className="font-medium text-yellow-400 cursor-pointer underline"
-            onClick={goToLogin}
+            onClick={() => {
+              setCurrentPage("login");
+              navigate("/auth/login");
+            }}
           >
-            Login
+            Sign In
           </button>
         </p>
       </fetcher.Form>

@@ -15,10 +15,6 @@ const Login = ({ setCurrentPage }) => {
   const error = fetcher.data?.error;
 
   const userData = fetcher.data?.user;
-  const goToRegister = () => {
-    setCurrentPage("register");
-    navigate("/auth/register");
-  };
 
   useEffect(() => {
     if (fetcher.state === "idle" && fetcher.data) {
@@ -67,8 +63,12 @@ const Login = ({ setCurrentPage }) => {
         <p className="text-[15px] text-slate-800 mt-3">
           Don't have an account?
           <button
+            type="button"
             className="font-medium text-yellow-400 cursor-pointer underline"
-            onClick={goToRegister}
+            onClick={() => {
+              setCurrentPage("register");
+              navigate("/auth/register");
+            }}
           >
             SignUp
           </button>
