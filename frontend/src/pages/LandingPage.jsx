@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import heroImg from "./../assets/interviewPhoto.jpg";
 import { APP_FEATURES } from "../utils/data";
 import Login from "./Auth/Login";
@@ -13,12 +13,18 @@ const LandingPage = () => {
   const [currentPage, setCurrentPage] = useState("login");
   const navigate = useNavigate();
   const HandleCTA = () => {
-    if (!user) {
-      setOpenAuthModal(true);
-    } else {
+    if (user && Object.keys(user).length > 0) {
       navigate("/dashboard");
+    } else {
+      setCurrentPage("login");
+      setOpenAuthModal(true);
     }
   };
+  useEffect(() => {
+    if (user) {
+      setOpenAuthModal(false); // close modal if user logs in
+    }
+  }, [user]);
   return (
     <>
       <div className="w-full min-h-full bg-[#FFFCEF]">
