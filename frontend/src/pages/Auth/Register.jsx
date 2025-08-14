@@ -5,7 +5,7 @@ import { useFetcher, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import toast from "react-hot-toast";
 
-const Register = () => {
+const Register = ({ setCurrentPage }) => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [profilePic, setProfilePic] = useState(null);
@@ -15,10 +15,13 @@ const Register = () => {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const { updateUser } = useContext(UserContext);
-  const goToLogin = () => navigate("/auth/login");
+  const goToLogin = () => {
+    navigate("/auth/login");
+    setCurrentPage("register");
+  };
   const userData = fetcher?.data?.user;
   const isSubmitting = fetcher.state === "submitting";
-  console.log(fetcher.data);
+
   useEffect(() => {
     if (fetcher.state === "idle" && fetcher.data) {
       if (fetcher.data.success) {

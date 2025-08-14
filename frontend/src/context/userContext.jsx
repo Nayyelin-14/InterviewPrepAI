@@ -38,7 +38,7 @@ const UserProvider = ({ children }) => {
   const clearUser = async () => {
     try {
       const response = await authApi.post(API_PATHS.Auth.LOGOUT); // this calls backend to clear cookie
-      console.log(response);
+
       if (response.status === 200) {
         return redirect("/");
       }
