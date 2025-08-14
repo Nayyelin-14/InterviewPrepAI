@@ -65,34 +65,33 @@ const Dashboard = () => {
   return (
     <DashBoardLayout>
       <div className="container mx-auto pt-4 pb-4 lg:px-10">
-        {!allSessions && (
+        {allSessions.length === 0 ? (
           <div className="h-screen flex items-center justify-center text-xl text-gray-500 ">
-            No sessions found , create a new one!!!
+            No sessions found, create a new one!!!
           </div>
-        )}
-
-        {allSessions &&
-          allSessions.map((data, index) => (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-3">
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-3">
+            {allSessions.map((data, index) => (
               <SummaryCard
-                key={data?.key}
+                key={data._id || index}
                 colors={CARD_BG[index % CARD_BG.length]}
-                role={data?.role || ""}
-                topicsToFocus={data?.topicsToFocus}
-                description={data?.description}
-                experience={data?.experience}
-                questions={data?.questions.length || "-"}
-                level={data?.level}
+                role={data.role || ""}
+                topicsToFocus={data.topicsToFocus}
+                description={data.description}
+                experience={data.experience}
+                questions={data.questions.length || "-"}
+                level={data.level}
                 lastUpdated={
-                  data?.updatedAt
+                  data.updatedAt
                     ? moment(data.updatedAt).format("Do MMM YYYY")
                     : ""
                 }
                 onSelect={() => navigate(`/interview-prep/${data._id}`)}
                 onDelete={() => setOpenDeleteAlert({ open: true, data })}
               />
-            </div>
-          ))}
+            ))}
+          </div>
+        )}
 
         <button
           onClick={() => setOpenCreateModal(true)}
