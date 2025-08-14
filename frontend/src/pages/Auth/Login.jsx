@@ -3,7 +3,7 @@ import { useFetcher, useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import toast from "react-hot-toast";
 import { UserContext } from "../../context/userContext";
-const Login = ({ setCurrentPage }) => {
+const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const fetcher = useFetcher();
@@ -15,7 +15,8 @@ const Login = ({ setCurrentPage }) => {
   const error = fetcher.data?.error;
 
   const userData = fetcher.data?.user;
-  console.log(fetcher);
+  const goToRegister = () => navigate("/auth/register");
+
   useEffect(() => {
     if (fetcher.state === "idle" && fetcher.data) {
       if (fetcher.data.success) {
@@ -64,7 +65,7 @@ const Login = ({ setCurrentPage }) => {
           Don't have an account?
           <button
             className="font-medium text-yellow-400 cursor-pointer underline"
-            onClick={() => setCurrentPage("signup")}
+            onClick={goToRegister}
           >
             SignUp
           </button>

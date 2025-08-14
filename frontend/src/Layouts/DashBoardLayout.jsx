@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 
 const DashBoardLayout = ({ children }) => {
-  const { user, loading, clearUser } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
