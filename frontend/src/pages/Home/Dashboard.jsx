@@ -65,9 +65,15 @@ const Dashboard = () => {
   return (
     <DashBoardLayout>
       <div className="container mx-auto pt-4 pb-4 lg:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-3">
-          {allSessions &&
-            allSessions.map((data, index) => (
+        {!allSessions && (
+          <div className="h-screen flex items-center justify-center text-xl text-gray-500 ">
+            No sessions found , create a new one!!!
+          </div>
+        )}
+
+        {allSessions &&
+          allSessions.map((data, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-3">
               <SummaryCard
                 key={data?.key}
                 colors={CARD_BG[index % CARD_BG.length]}
@@ -85,8 +91,9 @@ const Dashboard = () => {
                 onSelect={() => navigate(`/interview-prep/${data._id}`)}
                 onDelete={() => setOpenDeleteAlert({ open: true, data })}
               />
-            ))}
-        </div>
+            </div>
+          ))}
+
         <button
           onClick={() => setOpenCreateModal(true)}
           className="flex items-center justify-center h-12 gap-3 bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-bold text-white px-7 py-2.5 rounded-3xl hover:shadow-lg hover:ring-2 hover:ring-orange-400 transition-all cursor-pointer fixed bottom-10 right-10 md:right-15 md:bottom-15"
