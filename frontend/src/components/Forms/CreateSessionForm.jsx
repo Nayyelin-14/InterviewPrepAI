@@ -14,6 +14,7 @@ const CreateSessionForm = () => {
     description: "",
     topicsToFocus: "",
     level: "",
+    numberOfQuestions: "",
   });
   const [error, setError] = useState(false);
 
@@ -79,6 +80,16 @@ const CreateSessionForm = () => {
           label="Description"
           placeholder="(e.g., Any specific goals or notes for this session )"
           type="text"
+        />
+        <Input
+          value={formData.numberOfQuestions || ""}
+          onChangeInput={(e) =>
+            handleChange("numberOfQuestions", e.target.value)
+          }
+          name="numberOfQuestions"
+          label="Number of Questions"
+          placeholder="e.g., 5"
+          type="number"
         />
         <label htmlFor="level" className="text-sm font-medium text-gray-700">
           Level
