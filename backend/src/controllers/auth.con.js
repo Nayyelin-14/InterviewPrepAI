@@ -69,7 +69,7 @@ export const registerUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // set true in production
-      sameSite: "strict",
+      sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     };
     return res
@@ -113,7 +113,7 @@ export const loginUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // set true in production
-      sameSite: "strict",
+      sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     };
     return res.cookie("token", cookieToken, cookieOptions).status(201).json({
