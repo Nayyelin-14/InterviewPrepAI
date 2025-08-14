@@ -35,7 +35,7 @@ const Register = ({ setCurrentPage }) => {
   }, [fetcher.state, fetcher.data, navigate, updateUser, userData]);
 
   return (
-    <div className="w-[90vw] md:w-[55vw] lg:w-[45vw] p-7 flex flex-col justify-center">
+    <div className="w-[90vw] md:w-[55vw] lg:w-[45vw] p-7 flex flex-col justify-center mx-auto h-screen">
       <h3 className="text-lg font-semibold text-black">Create an account</h3>
       <p className="text-base font-medium mb-4">
         Join us today by entering your details below
