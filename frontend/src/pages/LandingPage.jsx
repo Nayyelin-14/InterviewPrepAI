@@ -5,7 +5,7 @@ import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import Modal from "../components/Modal";
 import { UserContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProfileCard from "../components/Cards/ProfileCard";
 const LandingPage = () => {
   const { user } = useContext(UserContext);
@@ -26,9 +26,13 @@ const LandingPage = () => {
         <div className="container mx-auto px-6 md:px-10 pt-6 pb-[200px] relative z-10">
           {/* Header */}
           <header className="flex justify-between items-center mb-7 ">
-            <div className="text-xl text-black font-bold">
-              Interview Prep By AI
-            </div>
+            <Link
+              to="/"
+              className="text-2xl font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 drop-shadow-md bg-black"
+            >
+              PrepWise
+            </Link>
+
             {user ? (
               <ProfileCard />
             ) : (
