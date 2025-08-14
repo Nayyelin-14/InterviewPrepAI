@@ -53,19 +53,21 @@ const SummaryCard = ({
         </button>
       </div>
       <div className="px-3 pb-3">
-        <div className="flex items-center gap-3 mt-4">
-          <div className="text-[11px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full">
-            Exprience : {experience}
+        <div className="flex flex-wrap items-center gap-3 mt-4">
+          <div className="text-xs font-medium text-black px-4 py-2 border border-gray-300 rounded-full flex items-center justify-center whitespace-nowrap">
+            Experience : {experience}
             {/* {experience === 1 ? "Year" : "Years"} */}
           </div>
-          <div className="text-[11px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full flex items-center justify-center">
+          <div className="text-xs font-medium text-black px-4 py-2 border border-gray-300 rounded-full flex items-center justify-center whitespace-nowrap">
             {questions} Q&A
           </div>
-          <div className="text-[11px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full flex items-center justify-center">
-            {level} level
-          </div>
-          <div className="text-[11px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full">
-            Last Updated {lastUpdated}
+          {level && (
+            <div className="text-xs font-medium text-black px-4 py-2 border border-gray-300 rounded-full flex items-center justify-center whitespace-nowrap">
+              {level}
+            </div>
+          )}
+          <div className="text-xs font-medium text-black px-4 py-2 border border-gray-300 rounded-full flex items-center justify-center whitespace-nowrap">
+            {lastUpdated}
           </div>
         </div>
         <p className="text-[13px] mt-2 text-gray-500 font-medium line-clamp-2 ">

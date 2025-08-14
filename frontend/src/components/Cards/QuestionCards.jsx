@@ -44,7 +44,7 @@ const QuestionCards = ({
           <div className="flex items-center  justify-end p-1  relative">
             <div
               className={`flex ${
-                isExpanded ? "md:flex " : "md:hidden group-hover:flex"
+                isExpanded ? "md:flex " : "hidden group-hover:flex"
               }`}
             >
               <button

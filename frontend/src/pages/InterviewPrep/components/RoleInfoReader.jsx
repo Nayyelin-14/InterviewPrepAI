@@ -10,7 +10,7 @@ const RoleInfoReader = ({
   updatedAt,
 }) => {
   return (
-    <div className="bg-white relative">
+    <div className="bg-white relative md:w-[85%] md:mx-auto">
       <div className="my-10 mx-auto px-10 md:px-20">
         <div className="h-[200px] flex flex-col justify-center relative z-10">
           <div className="flex items-start">
@@ -36,7 +36,7 @@ const RoleInfoReader = ({
               {questions} Q&A
             </div>
             <div className="text-[11px] font-medium  bg-black text-white px-3 py-1 border-[0.5px] border-gray-900 rounded-full">
-              Last Updated : {updatedAt}
+              {updatedAt}
             </div>
           </div>
         </div>
