@@ -17,7 +17,7 @@ const Register = ({ setCurrentPage }) => {
   const { updateUser } = useContext(UserContext);
   const goToLogin = () => {
     navigate("/auth/login");
-    setCurrentPage("register");
+    setCurrentPage("login");
   };
   const userData = fetcher?.data?.user;
   const isSubmitting = fetcher.state === "submitting";
