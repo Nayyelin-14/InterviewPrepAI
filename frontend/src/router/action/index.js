@@ -28,11 +28,7 @@ export const RegisterAction = async ({ request }) => {
   const formData = await request.formData();
 
   try {
-    const response = await authApi.post(API_PATHS.Auth.REGISTER, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await authApi.post(API_PATHS.Auth.REGISTER, formData);
     console.log(response);
     if (response.status !== 201) {
       return { error: response.data.error || "Register Failed!" };
