@@ -4,11 +4,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Home/Dashboard";
 import InterviewPrep from "./pages/InterviewPrep/InterviewPrep";
-import {
-  authCheckLoader,
-  fetchAllSessions,
-  fetchSessionById,
-} from "./router/loader";
+import { fetchAllSessions, fetchSessionById } from "./router/loader";
 import {
   InterviewAction,
   LoginAction,
