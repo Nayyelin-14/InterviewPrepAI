@@ -89,7 +89,7 @@ const Register = ({ setCurrentPage }) => {
           <button
             type="button"
             className="font-medium text-yellow-400 cursor-pointer underline"
-            onClick={goToLogin()}
+            onClick={goToLogin}
           >
             Login
           </button>
