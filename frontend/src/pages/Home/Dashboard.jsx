@@ -66,7 +66,7 @@ const Dashboard = () => {
     <DashBoardLayout>
       <div className="container mx-auto pt-4 pb-4 lg:px-10">
         {allSessions.length === 0 ? (
-          <div className="h-screen flex items-center justify-center text-xl text-gray-500 ">
+          <div className="h-[500px] flex items-center justify-center text-xl  text-gray-500">
             No sessions found, create a new one!!!
           </div>
         ) : (

@@ -63,7 +63,7 @@ const Register = ({ setCurrentPage }) => {
   };
   console.log(fetcher);
   return (
-    <div className="w-[90vw] md:w-[55vw] lg:w-[45vw] p-7 flex flex-col justify-center mx-auto h-screen">
+    <div className="w-[90vw] md:w-[55vw] lg:w-[45vw] p-7 flex flex-col justify-center mx-auto ">
       <h3 className="text-lg font-semibold text-black">Create an account</h3>
       <p className="text-base font-medium mb-4">
         Join us today by entering your details below
@@ -158,10 +158,7 @@ const Register = ({ setCurrentPage }) => {
           <button
             type="button"
             className="font-medium text-yellow-400 cursor-pointer underline"
-            onClick={() => {
-              setCurrentPage("login");
-              navigate("/auth/login");
-            }}
+            onClick={() => setCurrentPage("login")}
           >
             Sign In
           </button>

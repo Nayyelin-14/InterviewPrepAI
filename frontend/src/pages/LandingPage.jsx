@@ -31,7 +31,7 @@ const LandingPage = () => {
         <div className="w-[500px] h-[500px] backdrop-blur-[65px] absolute top-0 left-0" />
         <div className="container mx-auto px-6 md:px-10 pt-6 pb-[200px] relative z-10">
           {/* Header */}
-          <header className="flex justify-between items-center mb-7 ">
+          <header className="flex justify-between w-[90%] mx-auto items-center mb-7 ">
             <Link
               to="/"
               className="text-2xl font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 drop-shadow-md bg-black"

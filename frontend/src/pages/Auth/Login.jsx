@@ -66,8 +66,7 @@ const Login = ({ setCurrentPage }) => {
             type="button"
             className="font-medium text-yellow-400 cursor-pointer underline"
             onClick={() => {
-              setCurrentPage("register");
-              navigate("/auth/register");
+              setCurrentPage("signup");
             }}
           >
             SignUp

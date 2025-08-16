@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { LogOut, ChevronDown } from "lucide-react";
@@ -7,15 +7,22 @@ const ProfileCard = () => {
   const { user, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
+  const dropdownRef = useRef(null);
   const handleLogout = () => {
     clearUser();
     navigate("/");
   };
-
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
-    <div className="relative inline-block text-left">
-      {/* Button (Name + Avatar + Dropdown Icon) */}
+    <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200/30 dark:hover:bg-slate-700/40 transition-colors duration-200"

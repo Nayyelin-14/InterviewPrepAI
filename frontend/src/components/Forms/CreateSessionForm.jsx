@@ -37,14 +37,14 @@ const CreateSessionForm = () => {
   }, [fetcher.state, fetcher.data, navigate]);
 
   return (
-    <div className="w-[90vw] md:w-[35vw] p-7 flex flex-col justify-center">
+    <div className="w-[90vw] md:w-[35vw]  p-7 flex flex-col justify-center">
       <h3 className="text-lg font-semibold text-black">
         Start a New Interview Journey
       </h3>
       <p className="text-xs text-slate-700 font-semibold mt-[5px] mb-3"></p>
 
       <fetcher.Form
-        className="flex flex-col gap-4"
+        className="flex flex-col "
         method="post"
         action="/dashboard"
       >
@@ -91,7 +91,7 @@ const CreateSessionForm = () => {
           placeholder="e.g., 5"
           type="number"
         />
-        <label htmlFor="level" className="text-sm font-medium text-gray-700">
+        <label htmlFor="level" className="text-[13px] text-slate-800">
           Level
         </label>
         <select
@@ -99,7 +99,7 @@ const CreateSessionForm = () => {
           name="level"
           value={formData.level}
           onChange={(e) => handleChange("level", e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-600 focus:border-gray-600 cursor-pointer w-[50%]"
+          className="border border-gray-300 mt-3 rounded-md px-3 py-1 text-[14px] focus:outline-none focus:ring-1 focus:ring-gray-600 focus:border-gray-600 cursor-pointer w-[50%]"
         >
           <option value="">Select level</option>
           <option value="Basic">Basic</option>
@@ -110,7 +110,7 @@ const CreateSessionForm = () => {
           <p className="text-red-500 text-xs pb-2.5">{error}</p>
         )}
         <button
-          className="w-full p-3 bg-black text-white  rounded-lg cursor-pointer hover:bg-black/60 "
+          className="w-full p-2 mt-5 bg-black text-white  rounded-lg cursor-pointer hover:bg-black/60 "
           type="submit"
           disabled={isSubmitting}
         >
