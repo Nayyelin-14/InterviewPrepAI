@@ -54,14 +54,14 @@ const Dashboard = () => {
         hasHandled.current = true;
         revalidator.revalidate();
       }
-      setOpenDeleteAlert((openDeleteAlert.open = false));
+      setOpenDeleteAlert(false);
     }
 
     if (fetcher.state === "submitting") {
       hasHandled.current = false; // Reset on new request
     }
-  }, [fetcher.state, fetcher.data, revalidator]);
-  console.log(fetcher);
+  }, [fetcher.state, fetcher.data, revalidator, openDeleteAlert]);
+
   return (
     <DashBoardLayout>
       <div className="container mx-auto pt-4 pb-4 lg:px-10">

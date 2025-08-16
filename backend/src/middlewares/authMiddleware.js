@@ -34,9 +34,6 @@ export const protect = async (req, res, next) => {
     }
     req.user = user;
     next();
-    //  else {
-    //   return res.status(401).json({ message: "Not an  authenticated user" });
-    // }
   } catch (error) {
     return res
       .status(401)

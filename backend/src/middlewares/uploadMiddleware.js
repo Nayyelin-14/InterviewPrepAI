@@ -2,19 +2,8 @@ import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import cloudinary from "../configs/cloudinary.js";
 
-// const storage = new CloudinaryStorage({
-//   cloudinary: cloudinary,
-//   params: {
-//     folder: "profile_pictures", // e.g. "user_profiles"
-
-//     public_id: (req, file) => {
-//       console.log(file);
-//       return Date.now() + "-" + file.originalname.split(".")[0]; // custom filename
-//     },
-//   },
-// });
-
 const storage = multer.memoryStorage();
+console.log(storage);
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ["image/jpeg", "image/png", "image/jpeg", "video/mp4"];
   if (allowedTypes.includes(file.mimetype)) {
@@ -30,3 +19,14 @@ const upload = multer({
 });
 
 export default upload;
+// const storage = new CloudinaryStorage({
+//   cloudinary: cloudinary,
+//   params: {
+//     folder: "profile_pictures", // e.g. "user_profiles"
+
+//     public_id: (req, file) => {
+//       console.log(file);
+//       return Date.now() + "-" + file.originalname.split(".")[0]; // custom filename
+//     },
+//   },
+// });

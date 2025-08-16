@@ -16,9 +16,10 @@ export const registerUser = async (req, res) => {
   try {
     const { email, fullName, password } = req.body;
 
-    if (!email.trim() || !password.trim() || !fullName.trim()) {
+    if (!email?.trim() || !password?.trim() || !fullName?.trim()) {
       return res.status(400).json({ error: "All fields are required." });
     }
+
     const existedUser = await User.findOne({ email });
     if (existedUser) {
       return res.status(400).json({ message: "User already existed" });
@@ -27,15 +28,11 @@ export const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
 
-    //create new user
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-    if (!fullName.trim() || !email.trim() || !password.trim()) {
-      return res.status(400).json({ error: "All fields are required." });
-    }
 
-    const splitFileName = req.file?.originalname.split(".")[0];
+    const splitFileName = req.file.originalname.split(".")[0];
     const fileName = `${splitFileName}-${Date.now()}.webp`;
 
     const job = await ImageQueue.add(
@@ -49,10 +46,7 @@ export const registerUser = async (req, res) => {
       },
       {
         attempts: 3,
-        backoff: {
-          type: "exponential",
-          delay: 1000,
-        },
+        backoff: { type: "exponential", delay: 1000 },
       }
     );
 
@@ -64,14 +58,15 @@ export const registerUser = async (req, res) => {
       profileImageUrl: result?.secure_url,
       password: hashedpassword,
     });
-    //return user
+
     const cookieToken = generateToken(user._id);
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // set true in production
-      sameSite: "None",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     };
+
     return res
       .cookie("token", cookieToken, cookieOptions)
       .status(201)
@@ -85,9 +80,10 @@ export const registerUser = async (req, res) => {
         },
       });
   } catch (error) {
-    return {
-      error: error.response?.data?.message || "Login Failed!",
-    };
+    console.error(error);
+    return res.status(500).json({
+      error: error.message || "Registration failed",
+    });
   }
 };
 export const loginUser = async (req, res) => {
@@ -113,7 +109,7 @@ export const loginUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // set true in production
-      sameSite: "None",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     };
     return res.cookie("token", cookieToken, cookieOptions).status(201).json({

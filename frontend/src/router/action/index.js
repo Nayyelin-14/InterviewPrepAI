@@ -40,9 +40,10 @@ export const RegisterAction = async ({ request }) => {
 
     return { success: response.data.isSuccess, user: response.data.user };
   } catch (error) {
+    console.log(error);
     if (error instanceof AxiosError) {
       return {
-        error: error.response?.data?.error || "Login Failed!",
+        error: error.response?.data?.message || "Login Failed!",
       };
     } else throw error;
   }
