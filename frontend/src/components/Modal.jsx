@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 const Modal = ({ children, isOpen, onClose, title, hideHeader }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black/40">
+    <div className="fixed inset-0 z-50 flex justify-center items-center w-full  max-h-[80vh] bg-black/40">
       <div
         className={`relative flex flex-col bg-white shadow-lg rounded-lg gap-2 overflow-hidden`}
       >
