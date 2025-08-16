@@ -15,8 +15,9 @@ import {
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
-//interview-prep-ai-nine.vercel.app
-https: app.use(
+//https:interview-prep-ai-nine.vercel.app
+
+app.use(
   cors({
     origin: "https://interview-prep-ai-nine.vercel.app'",
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
